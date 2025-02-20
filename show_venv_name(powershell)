@@ -1,0 +1,14 @@
+function prompt {
+    # Check if the virtual environment is activated
+    if ($env:PIPENV_ACTIVE) {
+        # Get the virtual environment name from the VIRTUAL_ENV variable
+        $venvPath = $env:VIRTUAL_ENV
+        $venvName = Split-Path $venvPath -Leaf
+        # Discard everything after the last hyphen
+        if ($venvName -match '^(.*)-[^-]+$') {
+            $venvName = $matches[1]
+        }
+        Write-Host "($venvName) " -NoNewline -ForegroundColor Green
+    }
+    "PS  $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
+}
